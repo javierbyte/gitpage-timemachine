@@ -71,8 +71,10 @@ export default {
       if (position > scrolledPercent && position <= upperBoundMin) {
         const closeness = 1 - (position - upperBoundMin) / (scrolledPercent - upperBoundMin);
 
+        function easeInOutQuad(t) { return t<.5 ? 4*t*t*t : (t-1)*(2*t-2)*(2*t-2)+1 }
+
         return {
-          opacity: Math.pow(1 - closeness, 6),
+          opacity: easeInOutQuad(1 - closeness),
           transform: 'translatey(0) scale(1)'
         }
       }
@@ -108,7 +110,7 @@ export default {
     },
     tweenScrollToBottom() {
       if (window.scrollY === 0) {
-        tween(3072, (elapsed) => {
+        tween(3000, (elapsed) => {
           window.scrollTo(0, (document.body.scrollHeight - window.innerHeight) * elapsed);
         });
       }
