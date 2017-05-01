@@ -12,8 +12,17 @@
       </div>
     </div>
 
+    <div class="repo-info">
+      See the <a href="https://github.com/javierbyte/gitpage-timemachine/">Github repo</a> to learn how to create your own.
+    </div>
+
     <div class="commit-info" v-if="currentCommit">
-      {{currentCommit.message}} <span class="commit-info-author">--{{currentCommit.author}} {{new Date(currentCommit.date).toLocaleDateString()}} #{{currentCommit.sha.slice(0, 7)}}</span>
+      {{currentCommit.message}}
+      <span class="commit-info-author">
+        --{{currentCommit.author}}
+        {{new Date(currentCommit.date).toLocaleDateString()}}
+        <a :href="`https://github.com/javierbyte/javierbyte.github.io/commit/${currentCommit.sha}`">#{{currentCommit.sha.slice(0, 7)}}</a>
+      </span>
     </div>
   </div>
 </template>
@@ -143,6 +152,13 @@ export default {
 </script>
 
 <style lang="scss">
+  html {
+    box-sizing: border-box;
+  }
+  *, *:before, *:after {
+    box-sizing: inherit;
+  }
+
   * {
     padding: 0;
     margin: 0;
@@ -172,21 +188,36 @@ export default {
   .screenshot-container {
   }
 
+  .repo-info {
+    width: 80vw;
+    font-size: 0.9rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 1rem;
+    color: #fff;
+    text-shadow: rgba(0, 0, 0, 0.25) 0 -1px 0;
+  }
+
+  a {
+    color: #fff;
+    font-weight: 500;
+  }
+
   .commit-info {
+    width: 100vw;
+
     font-size: 0.9rem;
 
     $infoSize: 15vmin;
 
-    height: $infoSize;
-    line-height: $infoSize;
     position: fixed;
     bottom: 0;
     left: 0;
-    width: 100%;
     text-align: center;
-    padding: 0 1rem;
+    padding: 2rem 1rem;
     color: #fff;
-    text-shadow: darken(#7F8C8D, 10%) 0 -1px 0;
+    text-shadow: rgba(0, 0, 0, 0.25) 0 -1px 0;
 
     &-author {
       color: darken(#ECF0F1, 5%);

@@ -106,6 +106,7 @@ function saveJson(json) {
     fs.writeFile(
       'pageData/site.json',
       JSON.stringify({
+        repo: CONFIG.repo,
         commits: json
       }),
       'utf8',

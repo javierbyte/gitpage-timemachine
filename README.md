@@ -24,7 +24,7 @@ It currently supports 3 properties:
 * `maxImages` that is the maximun number of screenshots that we are trying to get,
 * `ignoreCommits` the entire hash of commits that you want to ignore.
 
-2. Run and get your data. (Becare! This takes around 3 minutes for a 24 screenshot history!).
+2. Run and get your data. (This takes around 3 minutes for a 24 screenshot history!).
 
 ```
 node cli.js
