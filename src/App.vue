@@ -21,6 +21,7 @@
 <script>
 import axios from 'axios';
 import _ from 'lodash';
+const tween = require('./lib/tween.js');
 
 export default {
   name: 'app',
@@ -104,6 +105,13 @@ export default {
         this.currentCommit = this.commits[currentIdx]
         this.scrolledPercent = result;
       })
+    },
+    tweenScrollToBottom() {
+      if (window.scrollY === 0) {
+        tween(3072, (elapsed) => {
+          window.scrollTo(0, (document.body.scrollHeight - window.innerHeight) * elapsed);
+        });
+      }
     }
   },
   created() {
@@ -121,6 +129,10 @@ export default {
     })
 
     window.addEventListener('scroll', this.handleScroll);
+
+    window.setTimeout(() => {
+      this.tweenScrollToBottom()
+    }, 256);
   },
   destroyed () {
     window.removeEventListener('scroll', this.handleScroll);
