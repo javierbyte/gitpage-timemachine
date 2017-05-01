@@ -4,7 +4,7 @@ See the evolution of your website in screenshots.
 
 [Live demo](http://javier.xyz/gitpage-timemachine)
 
-[![img2css](docs/screenshot.png)](http://javier.xyz/gitpage-timemachine)
+[![img2css](docs/thumbnail.png)](http://javier.xyz/gitpage-timemachine)
 
 ## How to use.
 
@@ -27,12 +27,12 @@ It currently supports 3 properties:
 2. Run and get your data. (Becare! This takes around 3 minutes for a 24 screenshot history!).
 
 ```
-	node cli.js
+node cli.js
 ```
 
 3. Run the frontend and see your history!
 ```
-	npm run dev
+npm run dev
 ```
 
 4. Profit!
