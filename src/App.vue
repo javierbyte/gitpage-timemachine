@@ -13,7 +13,7 @@
     </div>
 
     <div class="repo-info">
-      See the <a href="https://github.com/javierbyte/gitpage-timemachine/">Github repo</a> to learn how to create your own.
+      Visualize your Github Page history. See the <a href="https://github.com/javierbyte/gitpage-timemachine/">repo</a> to learn how to create your own.
     </div>
 
     <div class="commit-info" v-if="currentCommit">
