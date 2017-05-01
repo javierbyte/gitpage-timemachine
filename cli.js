@@ -24,7 +24,7 @@ function getScreenshot(hash) {
       format: 'jpg',
       css: 'body{height: 900px}'
     })
-    .dest('./_data')
+    .dest('./pageData')
     .run();
 }
 
@@ -49,7 +49,7 @@ function getCommitScreenshot(hash) {
 
   console.log(`\ngetting screenshot ${GLOBALcommitCount}/${GLOBALcommitLength}`);
 
-  if (fs.existsSync(`_data/${hash}.jpg`)) {
+  if (fs.existsSync(`pageData/${hash}.jpg`)) {
     console.log(`file already exists ${hash}`);
     return new Promise(resolve => resolve());
   }
@@ -104,7 +104,7 @@ function getCommitHistory() {
 function saveJson(json) {
   return new Promise((resolve, reject) => {
     fs.writeFile(
-      '_data/site.json',
+      'pageData/site.json',
       JSON.stringify({
         commits: json
       }),
@@ -134,9 +134,9 @@ function rimrafGit() {
 
 function cloneRepo(repo) {
   return new Promise((resolve, reject) => {
-    console.log(`> mkdir -p _data && git clone ${repo} _git`);
+    console.log(`> mkdir -p pageData && git clone ${repo} _git`);
 
-    exec(`mkdir -p _data && git clone ${repo} _git`, function(error, stdout, stderr) {
+    exec(`mkdir -p pageData && git clone ${repo} _git`, function(error, stdout, stderr) {
       if (error) {
         return reject(error);
       }

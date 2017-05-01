@@ -6,7 +6,7 @@
       <div v-for="(commit, commitIndex) in commits">
         <img
           class="screenshot"
-          :src="'_data/' + commit.sha + '.jpg'"
+          :src="'pageData/' + commit.sha + '.jpg'"
           :style="getThumbStyle(commitIndex)"
           alt="" />
       </div>
@@ -107,7 +107,7 @@ export default {
     }
   },
   created() {
-    axios.get('_data/site.json').then(res => {
+    axios.get('pageData/site.json').then(res => {
 
       this.site = _.omit(res.data, 'commits');
       this.commits = _.sortBy(res.data.commits, 'date');
