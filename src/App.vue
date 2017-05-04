@@ -44,10 +44,23 @@ export default {
       debouncedHandleScroll: null,
 
       currentCommit: null,
-      scrolledPercent: 0
+      scrolledPercent: 0,
+
+      debouncedSnap: null
     }
   },
   methods: {
+    snap() {
+      const idx = Math.round(this.scrolledPercent / (1 / this.commits.length));
+
+      tween({
+        start: document.body.scrollTop,
+        end: Math.round(1 / this.commits.length * idx * (document.body.scrollHeight - window.innerHeight)),
+        time: 255}, (elapsed) => {
+
+        window.scrollTo(0, Math.round(elapsed));
+      });
+    },
     getThumbStyle(commitIndex) {
       const scrolledPercent = this.scrolledPercent;
       const position = commitIndex / (this.commits.length);
@@ -110,17 +123,24 @@ export default {
           return (h[st]||b[st]) / ((h[sh]||b[sh]) - h.clientHeight) * 100;
         }
 
-        const result = Math.min(getScrollPercent() / 100, 1);
+        const result = getScrollPercent() / 100;
         const currentIdx = Math.min(Math.max(Math.floor(result * (this.commits.length)), 0), this.commits.length - 1);
 
         this.currentCommit = this.commits[currentIdx]
         this.scrolledPercent = result;
       })
+
+      if (this.debouncedSnap) {
+        this.debouncedSnap();
+      }
     },
     tweenScrollToBottom() {
       if (window.scrollY === 0) {
-        tween(3000, (elapsed) => {
-          window.scrollTo(0, (document.body.scrollHeight - window.innerHeight) * elapsed);
+        tween({
+          start: 0,
+          end: document.body.scrollHeight - window.innerHeight,
+          time: 3000}, (elapsed) => {
+          window.scrollTo(0, Math.round(elapsed));
         });
       }
     }
@@ -130,9 +150,8 @@ export default {
 
       this.site = _.omit(res.data, 'commits');
       this.commits = _.sortBy(res.data.commits, 'date');
-      this.currentCommit = this.commits[0];
 
-      console.log(`Rendering ${this.commits.length} commits`);
+      this.currentCommit = this.commits[0];
 
       this.loading = false;
     }).catch(err => {
@@ -144,6 +163,9 @@ export default {
     window.setTimeout(() => {
       this.tweenScrollToBottom()
     }, 256);
+  },
+  mounted() {
+    this.debouncedSnap = _.debounce(this.snap, 256);
   },
   destroyed () {
     window.removeEventListener('scroll', this.handleScroll);
@@ -182,7 +204,6 @@ export default {
     margin-left: $width * -0.5;
     margin-top: $width * -0.5 * 900 / 1280;
     transform-origin: 50% 0%;
-
   }
 
   .screenshot-container {
