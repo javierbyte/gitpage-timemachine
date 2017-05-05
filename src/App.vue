@@ -56,7 +56,7 @@ export default {
       tween({
         start: document.body.scrollTop,
         end: Math.round(1 / this.commits.length * idx * (document.body.scrollHeight - window.innerHeight)),
-        time: 255}, (elapsed) => {
+        time: 128}, (elapsed) => {
 
         window.scrollTo(0, Math.round(elapsed));
       });
@@ -165,7 +165,7 @@ export default {
     }, 256);
   },
   mounted() {
-    this.debouncedSnap = _.debounce(this.snap, 256);
+    this.debouncedSnap = _.debounce(this.snap, 512);
   },
   destroyed () {
     window.removeEventListener('scroll', this.handleScroll);
