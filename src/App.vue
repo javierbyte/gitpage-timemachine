@@ -1,6 +1,14 @@
 <template>
-  <div>
-    <div class="screenshot-container" :style="{
+  <div class="screenshot-container" >
+    <div class="repo-info">
+      Visualize your Github Page history. See the <a href="https://github.com/javierbyte/gitpage-timemachine/">repo</a> to learn how to create your own.
+    </div>
+
+    <div v-if="loading" class="loading">
+      Loading...
+    </div>
+
+    <div v-if="!loading" :style="{
         height: (100 + commits.length * 12) + 'vh'
       }">
       <div v-for="(commit, commitIndex) in commits">
@@ -10,19 +18,15 @@
           :style="getThumbStyle(commitIndex)"
           alt="" />
       </div>
-    </div>
 
-    <div class="repo-info">
-      Visualize your Github Page history. See the <a href="https://github.com/javierbyte/gitpage-timemachine/">repo</a> to learn how to create your own.
-    </div>
-
-    <div class="commit-info" v-if="currentCommit">
-      {{currentCommit.message}}
-      <span class="commit-info-author">
-        --{{currentCommit.author}}
-        {{new Date(currentCommit.date).toLocaleDateString()}}
-        <a :href="`https://github.com/javierbyte/javierbyte.github.io/commit/${currentCommit.sha}`">#{{currentCommit.sha.slice(0, 7)}}</a>
-      </span>
+      <div class="commit-info" v-if="currentCommit">
+        {{currentCommit.message}}
+        <span class="commit-info-author">
+          --{{currentCommit.author}}
+          {{new Date(currentCommit.date).toLocaleDateString()}}
+          <a :href="`https://github.com/javierbyte/javierbyte.github.io/commit/${currentCommit.sha}`">#{{currentCommit.sha.slice(0, 7)}}</a>
+        </span>
+      </div>
     </div>
   </div>
 </template>
@@ -30,7 +34,9 @@
 <script>
 import axios from 'axios';
 import _ from 'lodash';
+
 const tween = require('./lib/tween.js');
+const preloader = require('pre-loader');
 
 export default {
   name: 'app',
@@ -46,19 +52,26 @@ export default {
       currentCommit: null,
       scrolledPercent: 0,
 
-      debouncedSnap: null
+      debouncedSnap: null,
+
+      _lastSnapIdx: null
     }
   },
   methods: {
     snap() {
       const idx = Math.round(this.scrolledPercent / (1 / this.commits.length));
 
+      if (idx === this._lastSnapIdx) {
+        return
+      }
+
+      this._lastSnapIdx = idx;
+
       tween({
         start: document.body.scrollTop,
-        end: Math.round(1 / this.commits.length * idx * (document.body.scrollHeight - window.innerHeight)),
+        end: Math.ceil(1 / this.commits.length * idx * (document.body.scrollHeight - window.innerHeight)),
         time: 128}, (elapsed) => {
-
-        window.scrollTo(0, Math.round(elapsed));
+        window.scrollTo(0, Math.ceil(elapsed));
       });
     },
     getThumbStyle(commitIndex) {
@@ -123,8 +136,9 @@ export default {
           return (h[st]||b[st]) / ((h[sh]||b[sh]) - h.clientHeight) * 100;
         }
 
+        const idx = Math.round(this.scrolledPercent / (1 / this.commits.length));
         const result = getScrollPercent() / 100;
-        const currentIdx = Math.min(Math.max(Math.floor(result * (this.commits.length)), 0), this.commits.length - 1);
+        const currentIdx = Math.min(Math.max(Math.floor(idx), 0), this.commits.length - 1);
 
         this.currentCommit = this.commits[currentIdx]
         this.scrolledPercent = result;
@@ -143,6 +157,23 @@ export default {
           window.scrollTo(0, Math.round(elapsed));
         });
       }
+    },
+    loadedCommits() {
+      window.addEventListener('scroll', this.handleScroll);
+
+      const urlArray = _.map(this.commits, commit => {
+        return 'pageData/' + commit.sha + '.jpg';
+      });
+
+      new preloader(urlArray, {
+        onComplete: () => {
+          this.loading = false;
+
+          window.setTimeout(() => {
+            this.tweenScrollToBottom()
+          }, 128);
+        }
+      });
     }
   },
   created() {
@@ -153,16 +184,10 @@ export default {
 
       this.currentCommit = this.commits[0];
 
-      this.loading = false;
+      this.loadedCommits();
     }).catch(err => {
       console.error(err);
-    })
-
-    window.addEventListener('scroll', this.handleScroll);
-
-    window.setTimeout(() => {
-      this.tweenScrollToBottom()
-    }, 256);
+    });
   },
   mounted() {
     this.debouncedSnap = _.debounce(this.snap, 512);
@@ -191,6 +216,12 @@ export default {
     font-family: -apple-system, BlinkMacSystemFont, sans-serif;
     font-weight: 300;
     background: linear-gradient(#95A5A6, #7F8C8D);
+
+    min-height: 100vh;
+    width: 100vw;
+
+    color: #fff;
+    text-shadow: rgba(0, 0, 0, 0.25) 0 -1px 0;
   }
 
   .screenshot {
@@ -206,7 +237,10 @@ export default {
     transform-origin: 50% 0%;
   }
 
-  .screenshot-container {
+  .loading {
+    text-align: center;
+    top: 48vh;
+    color: #ECF0F1;
   }
 
   .repo-info {
@@ -216,8 +250,6 @@ export default {
     top: 0;
     left: 0;
     padding: 1rem;
-    color: #fff;
-    text-shadow: rgba(0, 0, 0, 0.25) 0 -1px 0;
   }
 
   a {
