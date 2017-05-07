@@ -1,9 +1,5 @@
 <template>
   <div class="screenshot-container" >
-    <div class="repo-info">
-      Visualize your Github Page history. See the <a href="https://github.com/javierbyte/gitpage-timemachine/">repo</a> to learn how to create your own.
-    </div>
-
     <div v-if="loading" class="loading">
       Loading...
     </div>
@@ -27,6 +23,10 @@
           <a :href="`https://github.com/javierbyte/javierbyte.github.io/commit/${currentCommit.sha}`">#{{currentCommit.sha.slice(0, 7)}}</a>
         </span>
       </div>
+    </div>
+
+    <div class="repo-info">
+      Visualize your Github Page history. See the <a href="https://github.com/javierbyte/gitpage-timemachine/">repo</a> to learn how to create your own.
     </div>
   </div>
 </template>
@@ -129,7 +129,7 @@ export default {
         if (!this.commits.length) return;
 
         function getScrollPercent() {
-          var h = document.documentElement, 
+          var h = document.documentElement,
               b = document.body,
               st = 'scrollTop',
               sh = 'scrollHeight';
@@ -250,6 +250,7 @@ export default {
     top: 0;
     left: 0;
     padding: 1rem;
+    z-index: 1;
   }
 
   a {
