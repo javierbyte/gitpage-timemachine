@@ -8,6 +8,8 @@ See the evolution of your website in screenshots.
 
 ## How to use.
 
+Since I'm using https://github.com/javierbyte/node-git-history this only works on Mac and Linux.
+
 Clone the repo, and `cd` into it.
 
 1. Config your data. Edit the `config.js` file.
@@ -25,6 +27,10 @@ It currently supports 3 properties:
 * `ignoreCommits` the entire hash of commits that you want to ignore.
 
 2. Run and get your data. (This takes around 3 minutes for a 24 screenshot history!).
+Run your `chrome-headless-screenshots` server
+```
+/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --disable-gpu --window-size=1280x900 --force-device-scale-factor=1 --headless --remote-debugging-port=9222 --hide-scrollbars
+```
 
 ```
 node cli.js

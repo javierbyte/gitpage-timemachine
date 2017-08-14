@@ -231,9 +231,9 @@ export default {
     top: 52%;
     left: 50%;
     width: $width;
-    height: $width * 900 / 1280;
+    height: $width * 900 / 1440;
     margin-left: $width * -0.5;
-    margin-top: $width * -0.5 * 900 / 1280;
+    margin-top: $width * -0.5 * 900 / 1440;
     transform-origin: 50% 0%;
   }
 
