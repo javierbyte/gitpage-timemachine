@@ -165,24 +165,9 @@ export default {
       }
     },
     tweenScrollToBottom() {
-      // function tryToSnap() {
-      //   const objective = document.body.scrollHeight - window.innerHeight;
-      //   const currentPosition = window.pageYOffset;
-      //   const nextStep =
-      //     Math.abs(currentPosition - objective) < 128
-      //       ? objective
-      //       : (objective + objective + currentPosition) / 3;
-
-      //   if (currentPosition !== objective) {
-      //     window.scrollTo(0, nextStep);
-      //     window.setTimeout(tryToSnap, 200);
-      //   }
-      // }
-      // tryToSnap();
-
       if (window.pageYOffset < 16) {
-        const objective = document.body.scrollHeight - window.innerHeight;
-        window.scrollTo(0, objective);
+        const bottomScroll = document.body.scrollHeight - window.innerHeight;
+        window.scrollTo(0, bottomScroll - 1);
       }
     },
     loadedCommits() {
@@ -192,13 +177,26 @@ export default {
         return "pageData/" + commit.sha + ".jpg";
       });
 
-      new preloader(urlArray.slice(-5), {
+      function fixScroll() {
+        window.requestAnimationFrame(() => {
+          const bottomScroll = document.body.scrollHeight - window.innerHeight;
+
+          if (window.pageYOffset === 0) {
+            window.scrollTo(0, 1);
+          } else if (document.body.scrollHeight >= window.pageYOffset) {
+            window.scrollTo(0, bottomScroll - 1);
+          }
+        });
+      }
+      fixScroll();
+
+      new preloader([urlArray.slice(0, 4), urlArray.slice(-4)], {
         onComplete: () => {
           this.loading = false;
 
           window.setTimeout(() => {
             this.tweenScrollToBottom();
-          }, 16);
+          }, 64);
         },
       });
     },
@@ -219,7 +217,7 @@ export default {
       });
   },
   mounted() {
-    this.debouncedSnap = _.debounce(this.snap, 512);
+    this.debouncedSnap = _.debounce(this.snap, 728);
   },
   destroyed() {
     window.removeEventListener("scroll", this.handleScroll);
@@ -247,7 +245,7 @@ html {
 body {
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: 300;
-  background: linear-gradient(#95a5a6, #7f8c8d);
+  background-color: #95a5a6;
 
   min-height: 100vh;
   width: 100vw;

@@ -16,18 +16,20 @@ let GLOBALcommitCount = 0;
 
 async function takeScreenshot(commit) {
   const { sha } = commit;
-  console.log("screenshot", sha);
-
   const puppeteer = require("puppeteer");
 
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
   // await page.goto('http://localhost:9142/');
+  console.log("navigate", sha);
   await page.goto("http://localhost:9142/", { waitUntil: "networkidle2" });
+
   await page.setViewport({
     width: 1440,
     height: 900,
   });
+
+  console.log("screenshot", sha);
   await page.screenshot({ path: `./pageData/${sha}.jpg`, quality: 60, type: "jpeg" });
   await browser.close();
 
@@ -40,7 +42,7 @@ async function getAsyncScreenshot(commit) {
   await takeScreenshot(commit);
 }
 
-function checkoutCommit(commit) {
+async function checkoutCommit(commit) {
   const { sha, date } = commit;
   console.log(`checkoutCommit: ${sha}`);
 
@@ -54,24 +56,27 @@ function checkoutCommit(commit) {
       date
     );
 
-    exec(`cd _git && git clean -df && git checkout -- . && git checkout ${sha} && git reset --hard`, function (error, stdout, stderr) {
-      console.log(
-        "" +
-          execSync(
-            `mkdir -p _git/docs && touch _git/docs/safe.txt && cp -r _git/docs/* _git/`
-          )
-      );
+    exec(
+      `cd _git && git clean -df && git checkout -- . && git checkout ${sha} && git reset --hard`,
+      function (error, stdout, stderr) {
+        console.log(
+          "" +
+            execSync(
+              `mkdir -p _git/docs && touch _git/docs/safe.txt && cp -r _git/docs/* _git/`
+            )
+        );
 
-      if (error) {
-        return reject(error);
+        if (error) {
+          return reject(error);
+        }
+
+        resolve(stdout + stderr);
       }
-
-      resolve(stdout + stderr);
-    });
+    );
   });
 }
 
-function getCommitScreenshot(commit) {
+async function getCommitScreenshot(commit) {
   const { sha } = commit;
 
   GLOBALcommitCount++;
@@ -85,9 +90,8 @@ function getCommitScreenshot(commit) {
 
   console.log(`getCommitScreenshot: ${sha}`);
 
-  return checkoutCommit(commit).then(() => {
-    return getAsyncScreenshot(commit);
-  });
+  await checkoutCommit(commit);
+  await getAsyncScreenshot(commit);
 }
 
 function getCommitHistory() {
@@ -197,7 +201,7 @@ rimrafGit()
     }
 
     return _.filter(gitLog, (gitLogEl) => {
-      return !_.includes(CONFIG.ignoreCommits, gitLogEl.sha);
+      return !_.includes(CONFIG.ignoreCommits.slice(-7), gitLogEl.sha.slice(-7));
     });
   })
   .then((gitLog) => {

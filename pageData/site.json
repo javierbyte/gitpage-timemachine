@@ -8,22 +8,28 @@
       "date": 1586605781000
     },
     {
-      "sha": "b73eeb39b81cdf13c9a53965d27375ed92e8d79f",
+      "sha": "5867911dfbb9c8e60508876ece1e847b04588eac",
       "author": "javierbyte",
-      "message": "Add compiled stuff",
-      "date": 1571028156000
+      "message": "Use react hooks",
+      "date": 1571036839000
     },
     {
-      "sha": "0e066aabfa46318d68f3eec41425a3df3941a71c",
+      "sha": "d4b8d452665a22ae410f74d5eb20960aabc8a764",
       "author": "javierbyte",
-      "message": "Update stats",
-      "date": 1560060839000
+      "message": "Update to gatsby",
+      "date": 1568588725000
     },
     {
-      "sha": "a5e6480c45536e3548d165500c682d800a896d77",
+      "sha": "e1fee5fc76b77d95ee7e43133795c70ecd09eb6a",
+      "author": "Javier Borquez",
+      "message": "Carbon Robotics",
+      "date": 1555353389000
+    },
+    {
+      "sha": "bdc43c2fe9a95c43c5d09c0b1622ec0e35899b4f",
       "author": "Javier Borquez",
       "message": "Update stats",
-      "date": 1552586385000
+      "date": 1543013250000
     },
     {
       "sha": "16f31e042d28c68583210c9110795178e74c70aa",
@@ -32,22 +38,28 @@
       "date": 1517215953000
     },
     {
-      "sha": "ebe870a5885ec101b3fd5f35cc2d0a9daeaa3c67",
+      "sha": "c93055f11a8fac4b87d2bba3efd5460061f6decd",
       "author": "Javier Bórquez",
       "message": "Update stats",
-      "date": 1506266794000
+      "date": 1507783365000
     },
     {
-      "sha": "5955f6347b13bb75b352b1c88cab0feddffde26f",
+      "sha": "13b96066479d93fd4e360f3a805707676b7dcb26",
       "author": "Javier Bórquez",
-      "message": "Update screenshot to Google Chrome",
-      "date": 1501921420000
+      "message": "Update stats",
+      "date": 1503379002000
     },
     {
-      "sha": "4b12bd5fd39d6c7795807b5b4a216b1a51a14e37",
-      "author": "Javier Borquez",
-      "message": "Update font. Update stats",
-      "date": 1500536684000
+      "sha": "86f80a1c048656139035faf63e9238af275a4706",
+      "author": "Javier Bórquez",
+      "message": "Add screenshot",
+      "date": 1501921335000
+    },
+    {
+      "sha": "5939570c14ad2860081a67399df47a94043747c8",
+      "author": "Javier Bórquez",
+      "message": "Update stats",
+      "date": 1493357725000
     },
     {
       "sha": "3798f040108cca7e6244dfd4c21cda10bfe7f273",
@@ -56,22 +68,28 @@
       "date": 1492217771000
     },
     {
-      "sha": "528085cf4fb4580e95694ee6403bbff588dc709f",
-      "author": "Javier Bórquez",
-      "message": "Update stats",
-      "date": 1487721248000
+      "sha": "a8234063f0b16ff4acd3610fa4e1ce9664213f34",
+      "author": "Javier Bórquez",
+      "message": "Add mising xml2js dependency",
+      "date": 1488651478000
     },
     {
-      "sha": "ffffb9c4ea86aa63394c4a42fa442123d7aaee4a",
+      "sha": "e94d1ebc6b05c3c71390a72b05abdf588b1b9b9d",
       "author": "Javier Bórquez",
       "message": "Update stats",
-      "date": 1480828510000
+      "date": 1482056252000
     },
     {
-      "sha": "844e8e970895d08705cea61db6cb4011bc20bef6",
+      "sha": "bb5b202111e608921544ea3988a93c77ba318784",
       "author": "Javier Bórquez",
       "message": "Update stats",
-      "date": 1477427958000
+      "date": 1479354380000
+    },
+    {
+      "sha": "9bc91e9f9054d9012919513e5f068674d3a87297",
+      "author": "Javier Bórquez",
+      "message": "Fix text-shadow on goodreads",
+      "date": 1476071667000
     },
     {
       "sha": "bc1f5bbfcf40cdeff685bfd3beed2b93e91ba460",
@@ -80,22 +98,28 @@
       "date": 1475351065000
     },
     {
-      "sha": "e368066ed6bd92c9543e13eccc9fc51a7ae0d6c8",
+      "sha": "a46c59f27b20094a892e4d4066e29a283c5ef6f6",
       "author": "Javier Bórquez",
       "message": "Update stats",
-      "date": 1470694234000
+      "date": 1471748786000
     },
     {
-      "sha": "b37f4d232b31d75533334826aa88cbaa28a6289e",
+      "sha": "f7ec26cd8b9a213a5022fcb413d67ba2140d2d24",
       "author": "Javier Bórquez",
-      "message": "Add privacy",
-      "date": 1466228323000
+      "message": "Update stats",
+      "date": 1466895087000
     },
     {
-      "sha": "40b77e80140ff4e4a4b8527ef9f3dbd3ca6c987f",
+      "sha": "b131808bde1cfd456466679ef8634d36bb4f33c2",
       "author": "Javier Bórquez",
-      "message": "Better hierachy",
-      "date": 1463981845000
+      "message": "Update stats",
+      "date": 1464309024000
+    },
+    {
+      "sha": "0fa66044c8d90686fdc17650c7ac309f435e7b87",
+      "author": "Javier Bórquez",
+      "message": "New design",
+      "date": 1463976764000
     },
     {
       "sha": "12f7e880da24cfce52d39fa0d1624a8c93b7874e",
@@ -104,22 +128,28 @@
       "date": 1461376535000
     },
     {
-      "sha": "4e39ce30d0e90d6afe313edfa328190494f08549",
+      "sha": "4edb300c1f0adb0e979960bf822e416267caf673",
       "author": "Javier Bórquez",
-      "message": "Update state",
-      "date": 1456943860000
+      "message": "Update some styles",
+      "date": 1458020196000
     },
     {
-      "sha": "9ae7b425c26a852cfd2da7c2af2b12bdc962144f",
+      "sha": "ca30a8e5431ffabde41161b7bc88ce972bd7c2c6",
       "author": "javierbyte",
-      "message": "Update triangles",
-      "date": 1454967333000
+      "message": "Update stats and bio",
+      "date": 1455669130000
     },
     {
-      "sha": "e21feeef5edc1ed9802d5e90c015fcab2e97a5a3",
+      "sha": "1946d90bc6bf296d98851932f58dc05149827e7d",
       "author": "javierbyte",
-      "message": "Better styles, and fixed incomplete instagram feed",
-      "date": 1454743163000
+      "message": "Update header",
+      "date": 1454904336000
+    },
+    {
+      "sha": "f86867503026ec94b04ecbbcf564d92b49712f8e",
+      "author": "javierbyte",
+      "message": "Update stats",
+      "date": 1453710156000
     },
     {
       "sha": "89b58b057543396a23979512b939f1ceabf24426",
@@ -128,22 +158,28 @@
       "date": 1449472813000
     },
     {
-      "sha": "a657f29520898a862ddc3d7abf99e3170eb1fcc2",
+      "sha": "feb624bbed1cc31bebc888bb4f00f3c2cd9b52e0",
       "author": "javierbyte",
       "message": "Update stats",
-      "date": 1447687965000
+      "date": 1447996321000
     },
     {
-      "sha": "24e90e783ee2c97e46ff75a98f2ec44550b667fd",
+      "sha": "098f08d8cd45eff5c72b06f6526362c6027b3d35",
       "author": "javierbyte",
       "message": "Update stats",
-      "date": 1446956265000
+      "date": 1447045984000
     },
     {
-      "sha": "f0df13a49df9a976db487a38f04eba8cbcba516c",
+      "sha": "0c69b297a8fc2bd80c5c1dbb03ed7ad887ec0b7b",
+      "author": "javierbyte",
+      "message": "Update adstast",
+      "date": 1446626311000
+    },
+    {
+      "sha": "dc9733f399bed3a6d26bc4348e510d7e4aec6e3a",
       "author": "javierbyte",
       "message": "Update stats",
-      "date": 1446315574000
+      "date": 1446268910000
     },
     {
       "sha": "d9ffa7465c710be415324382734d6d9113555d20",
@@ -152,22 +188,34 @@
       "date": 1444968741000
     },
     {
-      "sha": "335e17297cf661c6a79eb74ca58f7afe7cdaf9e0",
-      "author": "javierbyte",
-      "message": "Update instagram data",
-      "date": 1443495587000
-    },
-    {
-      "sha": "3162e0d8aab44f55868a516147a4e59cfb512c2b",
+      "sha": "79c8f389661ed2a631d7a48b1ad18354d94e39a0",
       "author": "javierbyte",
       "message": "Update stats",
-      "date": 1442896785000
+      "date": 1443676011000
     },
     {
-      "sha": "2b80d819dee37a8f76fb2f97dcaed3024bb17f59",
+      "sha": "3b84b96296deafc9ca2a7ef260ce69d69c42c1fb",
       "author": "javierbyte",
-      "message": "ADD: CNAME",
-      "date": 1442722958000
+      "message": "Fix undeclared variables on getLocals",
+      "date": 1443071671000
+    },
+    {
+      "sha": "f68f112cf3cb3ccf1327e548ebd9c0b986c8fd63",
+      "author": "javierbyte",
+      "message": "Fix markdown typo",
+      "date": 1442737144000
+    },
+    {
+      "sha": "e9ccbd00a04007b313172b542d0e8e8c13cd3f8a",
+      "author": "javierbyte",
+      "message": "Update: Reenable redirection",
+      "date": 1440480852000
+    },
+    {
+      "sha": "1a378e509dcf72c3148c55bc32f3e36f4c1422b9",
+      "author": "javierbyte",
+      "message": "Compile",
+      "date": 1440301247000
     }
   ]
 }
