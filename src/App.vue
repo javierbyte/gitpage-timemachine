@@ -141,12 +141,6 @@ export default {
       window.requestAnimationFrame(() => {
         if (!this.commits.length) return;
 
-        console.log({
-          scrollTop: document.querySelector(".screenshot-container").scrollTop,
-          scrollHeight: document.querySelector(".screenshot-container").scrollHeight,
-          clientHeight: document.querySelector(".screenshot-container").clientHeight,
-        });
-
         function getScrollPercent() {
           return (
             (100 * document.querySelector(".screenshot-container").scrollTop) /
@@ -175,7 +169,7 @@ export default {
       if (document.querySelector(".screenshot-container").scrollTop < 32) {
         const bottomScroll =
           document.querySelector(".screenshot-container").scrollHeight -
-          window.innerHeight;
+          document.querySelector(".screenshot-container").getBoundingClientRect().height;
 
         document.querySelector(".screenshot-container").scrollTop = bottomScroll - 1;
       }
@@ -198,7 +192,7 @@ export default {
         window.requestAnimationFrame(() => {
           const bottomScroll =
             document.querySelector(".screenshot-container").scrollHeight -
-            window.innerHeight;
+            document.querySelector(".screenshot-container").getBoundingClientRect().height;
 
           if (document.querySelector(".screenshot-container").scrollTop === 0) {
             document.querySelector(".screenshot-container").scrollTop = 1;
@@ -209,7 +203,7 @@ export default {
           }
         });
       }
-      // fixScroll();
+      fixScroll();
 
       new preloader([urlArray.slice(0, 4), urlArray.slice(-4)], {
         onComplete: () => {
