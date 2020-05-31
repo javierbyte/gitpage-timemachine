@@ -181,6 +181,11 @@ export default {
       }
     },
     loadedCommits() {
+      window.onresize = function () {
+        document.body.height = window.innerHeight;
+        document.querySelector(".screenshot-container").style.height = window.innerHeight;
+      };
+
       document
         .querySelector(".screenshot-container")
         .addEventListener("scroll", this.handleScroll);
