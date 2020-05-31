@@ -5,7 +5,7 @@
         v-if="!loading"
         class="screenshot-container-content"
         :style="{
-          height: 100 + commits.length * 12 + 'vh',
+          height: 100 + commits.length * 10 + 'vmax',
         }"
       >
         <div v-for="(commit, commitIndex) in commits">
