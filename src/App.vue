@@ -267,7 +267,6 @@ body {
   font-weight: 300;
 
   height: 100vh;
-  height: -webkit-fill-available;
   width: 100vw;
 
   color: #fff;
@@ -289,7 +288,6 @@ body {
 
 .screenshot-container {
   height: 100vh;
-  height: -webkit-fill-available;
   overflow-y: scroll;
   overflow-x: hidden;
   scroll-behavior: smooth;
