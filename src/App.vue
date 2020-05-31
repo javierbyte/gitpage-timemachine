@@ -54,6 +54,7 @@ export default {
   data() {
     return {
       loading: true,
+      tweening: false,
 
       site: null,
       commits: [],
@@ -70,6 +71,10 @@ export default {
   },
   methods: {
     snap() {
+      if (this.tweening) {
+        return;
+      }
+
       const idx = Math.round(this.scrolledPercent / (1 / this.commits.length));
 
       if (idx === this._lastSnapIdx) {
@@ -227,23 +232,36 @@ export default {
             document.querySelector(".screenshot-container").getBoundingClientRect()
               .height;
 
-          if (document.querySelector(".screenshot-container").scrollTop === 0) {
-            document.querySelector(".screenshot-container").scrollTop = 1;
+          if (document.querySelector(".screenshot-container").scrollTop < 1) {
+            document.querySelector(".screenshot-container").scrollTo({
+              left: 0,
+              top: 1,
+              behavior: "auto",
+            });
           } else if (
-            document.querySelector(".screenshot-container").scrollHeight >= bottomScroll
+            document.querySelector(".screenshot-container").scrollTop >= bottomScroll
           ) {
-            document.querySelector(".screenshot-container").scrollTop = bottomScroll - 1;
+            document.querySelector(".screenshot-container").scrollTo({
+              left: 0,
+              top: bottomScroll - 1,
+              behavior: "auto",
+            });
           }
+          fixScroll();
         });
       }
-      fixScroll();
 
       new preloader([...urlArray.slice(0, 4), ...urlArray.slice(-4)], {
         onComplete: () => {
           this.loading = false;
+          this.tweening = true;
 
           window.setTimeout(() => {
             this.tweenScrollToBottom();
+            window.setTimeout(() => {
+              fixScroll();
+              this.tweening = false;
+            }, 3200);
           }, 200);
         },
       });

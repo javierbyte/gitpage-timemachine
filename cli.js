@@ -211,6 +211,9 @@ rimrafGit()
         if (gitLogCopy[valIdx] && gitLogCopy[valIdx + 1] && gitLogCopy[valIdx - 1]) {
           val._nextTime = gitLogCopy[valIdx].date - gitLogCopy[valIdx + 1].date;
         }
+        else {
+         val._nextTime = Infinity;
+        }
         return val;
       });
 

@@ -5,7 +5,8 @@
       "sha": "5867911dfbb9c8e60508876ece1e847b04588eac",
       "author": "javierbyte",
       "message": "Use react hooks",
-      "date": 1571036839000
+      "date": 1571036839000,
+      "_nextTime": null
     },
     {
       "sha": "eaa4120998f070236f6807ce1f38210f149954cc",
@@ -165,7 +166,8 @@
       "sha": "c9348051b1b6ad957fe74b9bd810b2ee59c3878d",
       "author": "javierbyte",
       "message": "Update",
-      "date": 1440302913000
+      "date": 1440302913000,
+      "_nextTime": null
     }
   ]
 }
