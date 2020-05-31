@@ -46,6 +46,7 @@
 import axios from "axios";
 import _ from "lodash";
 
+const tween = require("./lib/tween.js");
 const preloader = require("pre-loader");
 
 export default {
@@ -77,12 +78,16 @@ export default {
 
       this._lastSnapIdx = idx;
 
-      document.querySelector(".screenshot-container").scrollTop = Math.ceil(
-        (1 / this.commits.length) *
-          idx *
-          (document.querySelector(".screenshot-container").scrollHeight -
-            document.querySelector(".screenshot-container").clientHeight)
-      );
+      document.querySelector(".screenshot-container").scrollTo({
+        left: 0,
+        top: Math.ceil(
+          (1 / this.commits.length) *
+            idx *
+            (document.querySelector(".screenshot-container").scrollHeight -
+              document.querySelector(".screenshot-container").clientHeight)
+        ),
+        behavior: "smooth",
+      });
     },
     getThumbStyle(commitIndex) {
       const scrolledPercent = this.scrolledPercent;
@@ -166,12 +171,39 @@ export default {
       }
     },
     tweenScrollToBottom() {
-      if (document.querySelector(".screenshot-container").scrollTop < 32) {
-        const bottomScroll =
-          document.querySelector(".screenshot-container").scrollHeight -
-          document.querySelector(".screenshot-container").getBoundingClientRect().height;
+      // if (document.querySelector(".screenshot-container").scrollTop < 32) {
+      //   const bottomScroll =
+      //     document.querySelector(".screenshot-container").scrollHeight -
+      //     document.querySelector(".screenshot-container").getBoundingClientRect().height;
 
-        document.querySelector(".screenshot-container").scrollTop = bottomScroll - 1;
+      //   // document.querySelector(".screenshot-container").scrollTop = bottomScroll - 1;
+      //   // document.querySelector(".screenshot-container").scrollTo(0, bottomScroll - 1);
+      //   document.querySelector(".screenshot-container").scrollTo({
+      //     left: 0,
+      //     top: bottomScroll - 1,
+      //     behavior: "auto"
+      //   });
+      // }
+
+      if (document.querySelector(".screenshot-container").scrollTop < 32) {
+        tween(
+          {
+            start: 0,
+            end:
+              document.querySelector(".screenshot-container").scrollHeight -
+              document.querySelector(".screenshot-container").getBoundingClientRect()
+                .height -
+              1,
+            time: 3200,
+          },
+          (elapsed) => {
+            document.querySelector(".screenshot-container").scrollTo({
+              left: 0,
+              top: Math.round(elapsed),
+              behavior: "auto",
+            });
+          }
+        );
       }
     },
     loadedCommits() {
@@ -290,7 +322,6 @@ body {
   height: 100vh;
   overflow-y: scroll;
   overflow-x: hidden;
-  scroll-behavior: smooth;
 }
 
 .screenshot-container-content {

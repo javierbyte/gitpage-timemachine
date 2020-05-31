@@ -1,6 +1,6 @@
 module.exports = {
 	repo: "git@github.com:javierbyte/javierbyte.github.io.git",
-	maxImages: 32,
+	maxImages: 24,
 	ignoreCommits: [
 		"1a378e5",
 		"6da97a5",
