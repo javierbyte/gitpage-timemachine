@@ -5,7 +5,7 @@
         v-if="!loading"
         class="screenshot-container-content"
         :style="{
-          height: 100 + commits.length * 200 + 'px',
+          height: 100 + commits.length * 12 + 'vh',
         }"
       >
         <div v-for="(commit, commitIndex) in commits">
@@ -192,7 +192,8 @@ export default {
         window.requestAnimationFrame(() => {
           const bottomScroll =
             document.querySelector(".screenshot-container").scrollHeight -
-            document.querySelector(".screenshot-container").getBoundingClientRect().height;
+            document.querySelector(".screenshot-container").getBoundingClientRect()
+              .height;
 
           if (document.querySelector(".screenshot-container").scrollTop === 0) {
             document.querySelector(".screenshot-container").scrollTop = 1;
@@ -205,13 +206,13 @@ export default {
       }
       fixScroll();
 
-      new preloader([urlArray.slice(0, 4), urlArray.slice(-4)], {
+      new preloader([...urlArray.slice(0, 4), ...urlArray.slice(-4)], {
         onComplete: () => {
           this.loading = false;
 
           window.setTimeout(() => {
             this.tweenScrollToBottom();
-          }, 256);
+          }, 200);
         },
       });
     },
