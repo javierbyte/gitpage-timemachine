@@ -30,7 +30,7 @@ async function takeScreenshot(commit) {
   });
 
   console.log("screenshot", sha);
-  await page.screenshot({ path: `./pageData/${sha}.jpg`, quality: 60, type: "jpeg" });
+  await page.screenshot({ path: `./pageData/${sha}.jpg`, quality: 55, type: "jpeg" });
   await browser.close();
 
   // return new Promise((resolve) => {
@@ -187,6 +187,7 @@ function runHttpServer() {
 }
 
 function killHttpServer() {
+  execSync("rm -rf _git");
   console.log("\nkill http server");
   HTTPSERVER.kill();
 }
@@ -200,14 +201,37 @@ rimrafGit()
       return gitLog;
     }
 
-    return _.filter(gitLog, (gitLogEl) => {
-      return !_.includes(CONFIG.ignoreCommits.slice(-7), gitLogEl.sha.slice(-7));
+    return _.reject(gitLog, (gitLogEl) => {
+      return CONFIG.ignoreCommits.some(
+        (commitToIgnore) => commitToIgnore.slice(0, 7) === gitLogEl.sha.slice(0, 7)
+      );
     });
   })
   .then((gitLog) => {
-    return _.filter(gitLog, (gitLogEl, gitLogIdx) => {
-      return gitLogIdx % Math.ceil(gitLog.length / kMaxCommitAmmount) === 0;
-    });
+    let gitLogCopy = [...gitLog];
+
+    while (gitLogCopy.length > kMaxCommitAmmount) {
+      console.log("gitLogCopy.length", gitLogCopy.length);
+
+      const gitLogDated = _.map(gitLogCopy, (val, valIdx) => {
+        if (gitLogCopy[valIdx] && gitLogCopy[valIdx + 1] && gitLogCopy[valIdx - 1]) {
+          val._nextTime = gitLogCopy[valIdx].date - gitLogCopy[valIdx + 1].date;
+        }
+        return val;
+      });
+
+      const gitLogMin = _.minBy(gitLogDated, "_nextTime");
+
+      gitLogCopy = _.reject(gitLogCopy, (e) => {
+        if (!e._nextTime) return false;
+
+        return e._nextTime === gitLogMin._nextTime;
+      });
+    }
+
+    return gitLogCopy;
+
+    console.log("!!! >>>> MIN TIME >>>>", gitLogMin);
   })
   .then((gitLog) => {
     GLOBALcommitLength = gitLog.length;
@@ -216,23 +240,11 @@ rimrafGit()
 
     return saveJson(gitLog);
   })
-  .then((gitLog) => {
-    return new Promise((resolve, reject) => {
-      async.waterfall(
-        _.map(gitLog, (commit) => {
-          return function (cb) {
-            getCommitScreenshot(commit).then(() => cb(null));
-          };
-        }),
-        (err, res) => {
-          if (err) {
-            return reject(err);
-          }
-
-          return resolve(res);
-        }
-      );
-    });
+  .then(async (gitLog) => {
+    for (const commitIdx in gitLog) {
+      const commit = gitLog[commitIdx];
+      await getCommitScreenshot(commit);
+    }
   })
   .then(killHttpServer)
   .then(() => {

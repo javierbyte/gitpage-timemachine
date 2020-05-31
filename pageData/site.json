@@ -2,220 +2,226 @@
   "repo": "git@github.com:javierbyte/javierbyte.github.io.git",
   "commits": [
     {
-      "sha": "0559a595a37864e80f614ae1b6eac74eeebed55d",
-      "author": "javierbyte",
-      "message": "Update stats",
-      "date": 1586605781000
-    },
-    {
       "sha": "5867911dfbb9c8e60508876ece1e847b04588eac",
       "author": "javierbyte",
       "message": "Use react hooks",
       "date": 1571036839000
     },
     {
-      "sha": "d4b8d452665a22ae410f74d5eb20960aabc8a764",
+      "sha": "eaa4120998f070236f6807ce1f38210f149954cc",
       "author": "javierbyte",
-      "message": "Update to gatsby",
-      "date": 1568588725000
+      "message": "Update src",
+      "date": 1571028055000,
+      "_nextTime": 3441276000
     },
     {
-      "sha": "e1fee5fc76b77d95ee7e43133795c70ecd09eb6a",
+      "sha": "6bffccc4db6f5b55b2ca97d54e71dbfbb5bbedf5",
+      "author": "javierbyte",
+      "message": "Fix fonts",
+      "date": 1567586779000,
+      "_nextTime": 7525940000
+    },
+    {
+      "sha": "0e066aabfa46318d68f3eec41425a3df3941a71c",
+      "author": "javierbyte",
+      "message": "Update stats",
+      "date": 1560060839000,
+      "_nextTime": 2755340000
+    },
+    {
+      "sha": "9af3c9498a710c3751a53922b38d046a84a7c3d6",
+      "author": "javierbyte",
+      "message": "Update avatar",
+      "date": 1557305499000,
+      "_nextTime": 2887251000
+    },
+    {
+      "sha": "ee9022838b6ab632ad51829844aefebcddda076a",
       "author": "Javier Borquez",
-      "message": "Carbon Robotics",
-      "date": 1555353389000
+      "message": "Add a.png",
+      "date": 1554418248000,
+      "_nextTime": 1831863000
+    },
+    {
+      "sha": "a5e6480c45536e3548d165500c682d800a896d77",
+      "author": "Javier Borquez",
+      "message": "Update stats",
+      "date": 1552586385000,
+      "_nextTime": 9573135000
     },
     {
       "sha": "bdc43c2fe9a95c43c5d09c0b1622ec0e35899b4f",
       "author": "Javier Borquez",
       "message": "Update stats",
-      "date": 1543013250000
+      "date": 1543013250000,
+      "_nextTime": 7068804000
     },
     {
-      "sha": "16f31e042d28c68583210c9110795178e74c70aa",
+      "sha": "029d7fab07420da0fabd39df9c0080833c32b00d",
+      "author": "Javier Bórquez",
+      "message": "Update status",
+      "date": 1535944446000,
+      "_nextTime": 14675623000
+    },
+    {
+      "sha": "0c034cdeb4271de8bcaf0371f405f135121d53d0",
+      "author": "Javier Bórquez",
+      "message": "Update stats",
+      "date": 1521268823000,
+      "_nextTime": 4067829000
+    },
+    {
+      "sha": "16c875e56b3724d635da7ac99148d1e128d47a52",
       "author": "Javier Bórquez",
-      "message": "Add more projects",
-      "date": 1517215953000
+      "message": "Fix safari compatibility",
+      "date": 1517200994000,
+      "_nextTime": 4117977000
+    },
+    {
+      "sha": "54d4886cfe894695f853980536f052cfa33b9ad1",
+      "author": "Javier Bórquez",
+      "message": "Update stats",
+      "date": 1513083017000,
+      "_nextTime": 5299652000
     },
     {
       "sha": "c93055f11a8fac4b87d2bba3efd5460061f6decd",
       "author": "Javier Bórquez",
       "message": "Update stats",
-      "date": 1507783365000
+      "date": 1507783365000,
+      "_nextTime": 2253581000
+    },
+    {
+      "sha": "06b6251b41fe9d2fae4ebb45c8b71addd1c1a99f",
+      "author": "Javier Bórquez",
+      "message": "Update stats",
+      "date": 1505529784000,
+      "_nextTime": 2150782000
     },
     {
       "sha": "13b96066479d93fd4e360f3a805707676b7dcb26",
       "author": "Javier Bórquez",
       "message": "Update stats",
-      "date": 1503379002000
+      "date": 1503379002000,
+      "_nextTime": 2842318000
     },
     {
-      "sha": "86f80a1c048656139035faf63e9238af275a4706",
+      "sha": "4b12bd5fd39d6c7795807b5b4a216b1a51a14e37",
+      "author": "Javier Borquez",
+      "message": "Update font. Update stats",
+      "date": 1500536684000,
+      "_nextTime": 10788120000
+    },
+    {
+      "sha": "072c982d4bcf0532bbf94e5228fc318d32a877cd",
       "author": "Javier Bórquez",
-      "message": "Add screenshot",
-      "date": 1501921335000
+      "message": "Update stats",
+      "date": 1489748564000,
+      "_nextTime": 2027316000
     },
     {
-      "sha": "5939570c14ad2860081a67399df47a94043747c8",
+      "sha": "528085cf4fb4580e95694ee6403bbff588dc709f",
+      "author": "Javier Bórquez",
+      "message": "Update stats",
+      "date": 1487721248000,
+      "_nextTime": 2733423000
+    },
+    {
+      "sha": "459c98e725db1d94a620be914c975e4349236793",
       "author": "Javier Bórquez",
       "message": "Update stats",
-      "date": 1493357725000
-    },
-    {
-      "sha": "3798f040108cca7e6244dfd4c21cda10bfe7f273",
-      "author": "Javier Bórquez",
-      "message": "Update stats. Show 9 code projects",
-      "date": 1492217771000
-    },
-    {
-      "sha": "a8234063f0b16ff4acd3610fa4e1ce9664213f34",
-      "author": "Javier Bórquez",
-      "message": "Add mising xml2js dependency",
-      "date": 1488651478000
-    },
-    {
-      "sha": "e94d1ebc6b05c3c71390a72b05abdf588b1b9b9d",
-      "author": "Javier Bórquez",
-      "message": "Update stats",
-      "date": 1482056252000
+      "date": 1483251321000,
+      "_nextTime": 3896941000
     },
     {
       "sha": "bb5b202111e608921544ea3988a93c77ba318784",
       "author": "Javier Bórquez",
       "message": "Update stats",
-      "date": 1479354380000
+      "date": 1479354380000,
+      "_nextTime": 1926422000
     },
     {
-      "sha": "9bc91e9f9054d9012919513e5f068674d3a87297",
+      "sha": "844e8e970895d08705cea61db6cb4011bc20bef6",
       "author": "Javier Bórquez",
-      "message": "Fix text-shadow on goodreads",
-      "date": 1476071667000
+      "message": "Update stats",
+      "date": 1477427958000,
+      "_nextTime": 2076893000
     },
     {
       "sha": "bc1f5bbfcf40cdeff685bfd3beed2b93e91ba460",
       "author": "Javier Bórquez",
       "message": "Update stats",
-      "date": 1475351065000
+      "date": 1475351065000,
+      "_nextTime": 2135958000
     },
     {
-      "sha": "a46c59f27b20094a892e4d4066e29a283c5ef6f6",
+      "sha": "49a1c5f1146b19579ca21431f94b6606e6323b8e",
       "author": "Javier Bórquez",
       "message": "Update stats",
-      "date": 1471748786000
+      "date": 1473215107000,
+      "_nextTime": 2520873000
     },
     {
-      "sha": "f7ec26cd8b9a213a5022fcb413d67ba2140d2d24",
+      "sha": "e368066ed6bd92c9543e13eccc9fc51a7ae0d6c8",
       "author": "Javier Bórquez",
       "message": "Update stats",
-      "date": 1466895087000
+      "date": 1470694234000,
+      "_nextTime": 4465911000
     },
     {
-      "sha": "b131808bde1cfd456466679ef8634d36bb4f33c2",
+      "sha": "b37f4d232b31d75533334826aa88cbaa28a6289e",
+      "author": "Javier Bórquez",
+      "message": "Add privacy",
+      "date": 1466228323000,
+      "_nextTime": 3296761000
+    },
+    {
+      "sha": "91b77737c0bdc1b6fdf8cdef30c5d523cf4dde3e",
       "author": "Javier Bórquez",
       "message": "Update stats",
-      "date": 1464309024000
+      "date": 1462931562000,
+      "_nextTime": 2829740000
     },
     {
-      "sha": "0fa66044c8d90686fdc17650c7ac309f435e7b87",
-      "author": "Javier Bórquez",
-      "message": "New design",
-      "date": 1463976764000
-    },
-    {
-      "sha": "12f7e880da24cfce52d39fa0d1624a8c93b7874e",
+      "sha": "da4c89766fa0ecee4e38c7479d4d247246e3a2ca",
       "author": "Javier Bórquez",
       "message": "Update stats",
-      "date": 1461376535000
+      "date": 1460101822000,
+      "_nextTime": 3509940000
     },
     {
-      "sha": "4edb300c1f0adb0e979960bf822e416267caf673",
+      "sha": "a34dc7142409587124d7b6ba5cac1ebcc3c142df",
       "author": "Javier Bórquez",
-      "message": "Update some styles",
-      "date": 1458020196000
+      "message": "Update state",
+      "date": 1456591882000,
+      "_nextTime": 4088850000
     },
     {
-      "sha": "ca30a8e5431ffabde41161b7bc88ce972bd7c2c6",
-      "author": "javierbyte",
-      "message": "Update stats and bio",
-      "date": 1455669130000
-    },
-    {
-      "sha": "1946d90bc6bf296d98851932f58dc05149827e7d",
-      "author": "javierbyte",
-      "message": "Update header",
-      "date": 1454904336000
-    },
-    {
-      "sha": "f86867503026ec94b04ecbbcf564d92b49712f8e",
+      "sha": "2f54c840b092a1b818bb236b4dcf7a27319dc9c1",
       "author": "javierbyte",
       "message": "Update stats",
-      "date": 1453710156000
+      "date": 1452503032000,
+      "_nextTime": 6083526000
     },
     {
-      "sha": "89b58b057543396a23979512b939f1ceabf24426",
+      "sha": "2c85306324e8ef2695664325e373478c933dcd5e",
       "author": "javierbyte",
       "message": "Update stats",
-      "date": 1449472813000
+      "date": 1446419506000,
+      "_nextTime": 3682618000
     },
     {
-      "sha": "feb624bbed1cc31bebc888bb4f00f3c2cd9b52e0",
+      "sha": "69bdd0a1be7e613cf9a3d64ce1a5badd52a1d484",
       "author": "javierbyte",
-      "message": "Update stats",
-      "date": 1447996321000
+      "message": "Add static site generator",
+      "date": 1442736888000,
+      "_nextTime": 2433975000
     },
     {
-      "sha": "098f08d8cd45eff5c72b06f6526362c6027b3d35",
+      "sha": "c9348051b1b6ad957fe74b9bd810b2ee59c3878d",
       "author": "javierbyte",
-      "message": "Update stats",
-      "date": 1447045984000
-    },
-    {
-      "sha": "0c69b297a8fc2bd80c5c1dbb03ed7ad887ec0b7b",
-      "author": "javierbyte",
-      "message": "Update adstast",
-      "date": 1446626311000
-    },
-    {
-      "sha": "dc9733f399bed3a6d26bc4348e510d7e4aec6e3a",
-      "author": "javierbyte",
-      "message": "Update stats",
-      "date": 1446268910000
-    },
-    {
-      "sha": "d9ffa7465c710be415324382734d6d9113555d20",
-      "author": "javierbyte",
-      "message": "Update stats",
-      "date": 1444968741000
-    },
-    {
-      "sha": "79c8f389661ed2a631d7a48b1ad18354d94e39a0",
-      "author": "javierbyte",
-      "message": "Update stats",
-      "date": 1443676011000
-    },
-    {
-      "sha": "3b84b96296deafc9ca2a7ef260ce69d69c42c1fb",
-      "author": "javierbyte",
-      "message": "Fix undeclared variables on getLocals",
-      "date": 1443071671000
-    },
-    {
-      "sha": "f68f112cf3cb3ccf1327e548ebd9c0b986c8fd63",
-      "author": "javierbyte",
-      "message": "Fix markdown typo",
-      "date": 1442737144000
-    },
-    {
-      "sha": "e9ccbd00a04007b313172b542d0e8e8c13cd3f8a",
-      "author": "javierbyte",
-      "message": "Update: Reenable redirection",
-      "date": 1440480852000
-    },
-    {
-      "sha": "1a378e509dcf72c3148c55bc32f3e36f4c1422b9",
-      "author": "javierbyte",
-      "message": "Compile",
-      "date": 1440301247000
+      "message": "Update",
+      "date": 1440302913000
     }
   ]
 }

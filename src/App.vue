@@ -196,7 +196,7 @@ export default {
 
           window.setTimeout(() => {
             this.tweenScrollToBottom();
-          }, 64);
+          }, 128);
         },
       });
     },
@@ -217,7 +217,7 @@ export default {
       });
   },
   mounted() {
-    this.debouncedSnap = _.debounce(this.snap, 728);
+    this.debouncedSnap = _.debounce(this.snap, 256);
   },
   destroyed() {
     window.removeEventListener("scroll", this.handleScroll);
@@ -242,10 +242,13 @@ html {
   position: relative;
 }
 
+body, html {
+  background-color: #95a5a6;
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: 300;
-  background-color: #95a5a6;
 
   min-height: 100vh;
   width: 100vw;
