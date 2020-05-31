@@ -20,7 +20,6 @@ async function takeScreenshot(commit) {
 
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
-  // await page.goto('http://localhost:9142/');
   console.log("navigate", sha);
   await page.goto("http://localhost:9142/", { waitUntil: "networkidle2" });
 
@@ -30,7 +29,7 @@ async function takeScreenshot(commit) {
   });
 
   console.log("screenshot", sha);
-  await page.screenshot({ path: `./pageData/${sha}.jpg`, quality: 55, type: "jpeg" });
+  await page.screenshot({ path: `./pageData/${sha}.jpg`, type: "jpeg", quality: 50 });
   await browser.close();
 
   // return new Promise((resolve) => {
@@ -49,11 +48,6 @@ async function checkoutCommit(commit) {
   return new Promise((resolve, reject) => {
     console.log(
       `> cd _git && git checkout -- . && git checkout ${sha} && git reset --hard`
-    );
-
-    console.log(
-      parseInt(sha, 16) > parseInt("d4b8d452665a22ae410f74d5eb20960aabc8a764", 16),
-      date
     );
 
     exec(

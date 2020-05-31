@@ -1,37 +1,39 @@
 <template>
-  <div class="screenshot-container">
-    <div v-if="loading" class="loading">
-      Loading...
-    </div>
+  <div>
+    <div class="screenshot-container">
+      <div
+        v-if="!loading"
+        class="screenshot-container-content"
+        :style="{
+          height: 100 + commits.length * 200 + 'px',
+        }"
+      >
+        <div v-for="(commit, commitIndex) in commits">
+          <img
+            class="screenshot"
+            :src="'pageData/' + commit.sha + '.jpg'"
+            :style="getThumbStyle(commitIndex)"
+            alt=""
+          />
+        </div>
 
-    <div
-      v-if="!loading"
-      :style="{
-        height: 100 + commits.length * 12 + 'vh',
-      }"
-    >
-      <div v-for="(commit, commitIndex) in commits">
-        <img
-          class="screenshot"
-          :src="'pageData/' + commit.sha + '.jpg'"
-          :style="getThumbStyle(commitIndex)"
-          alt=""
-        />
+        <div class="commit-info" v-if="currentCommit">
+          {{ currentCommit.message }}
+          <span class="commit-info-author">
+            --{{ currentCommit.author }}
+            {{ new Date(currentCommit.date).toLocaleDateString() }}
+            <a
+              :href="`https://github.com/javierbyte/javierbyte.github.io/commit/${currentCommit.sha}`"
+              >#{{ currentCommit.sha.slice(0, 7) }}</a
+            >
+          </span>
+        </div>
       </div>
 
-      <div class="commit-info" v-if="currentCommit">
-        {{ currentCommit.message }}
-        <span class="commit-info-author">
-          --{{ currentCommit.author }}
-          {{ new Date(currentCommit.date).toLocaleDateString() }}
-          <a
-            :href="`https://github.com/javierbyte/javierbyte.github.io/commit/${currentCommit.sha}`"
-            >#{{ currentCommit.sha.slice(0, 7) }}</a
-          >
-        </span>
+      <div v-if="loading" class="loading">
+        Loading...
       </div>
     </div>
-
     <div class="repo-info">
       Visualize your Github Page history. See the
       <a href="https://github.com/javierbyte/gitpage-timemachine/">repo</a> to learn how
@@ -75,13 +77,11 @@ export default {
 
       this._lastSnapIdx = idx;
 
-      window.scrollTo(
-        0,
-        Math.ceil(
-          (1 / this.commits.length) *
-            idx *
-            (document.body.scrollHeight - window.innerHeight)
-        )
+      document.querySelector(".screenshot-container").scrollTop = Math.ceil(
+        (1 / this.commits.length) *
+          idx *
+          (document.querySelector(".screenshot-container").scrollHeight -
+            document.querySelector(".screenshot-container").clientHeight)
       );
     },
     getThumbStyle(commitIndex) {
@@ -141,16 +141,23 @@ export default {
       window.requestAnimationFrame(() => {
         if (!this.commits.length) return;
 
+        console.log({
+          scrollTop: document.querySelector(".screenshot-container").scrollTop,
+          scrollHeight: document.querySelector(".screenshot-container").scrollHeight,
+          clientHeight: document.querySelector(".screenshot-container").clientHeight,
+        });
+
         function getScrollPercent() {
-          var h = document.documentElement,
-            b = document.body,
-            st = "scrollTop",
-            sh = "scrollHeight";
-          return ((h[st] || b[st]) / ((h[sh] || b[sh]) - h.clientHeight)) * 100;
+          return (
+            (100 * document.querySelector(".screenshot-container").scrollTop) /
+            (document.querySelector(".screenshot-container").scrollHeight -
+              document.querySelector(".screenshot-container").clientHeight)
+          );
         }
 
         const idx = Math.round(this.scrolledPercent / (1 / this.commits.length));
         const result = getScrollPercent() / 100;
+
         const currentIdx = Math.min(
           Math.max(Math.floor(idx), 0),
           this.commits.length - 1
@@ -165,13 +172,18 @@ export default {
       }
     },
     tweenScrollToBottom() {
-      if (window.pageYOffset < 16) {
-        const bottomScroll = document.body.scrollHeight - window.innerHeight;
-        window.scrollTo(0, bottomScroll - 1);
+      if (document.querySelector(".screenshot-container").scrollTop < 32) {
+        const bottomScroll =
+          document.querySelector(".screenshot-container").scrollHeight -
+          window.innerHeight;
+
+        document.querySelector(".screenshot-container").scrollTop = bottomScroll - 1;
       }
     },
     loadedCommits() {
-      window.addEventListener("scroll", this.handleScroll);
+      document
+        .querySelector(".screenshot-container")
+        .addEventListener("scroll", this.handleScroll);
 
       const urlArray = _.map(this.commits, (commit) => {
         return "pageData/" + commit.sha + ".jpg";
@@ -179,16 +191,20 @@ export default {
 
       function fixScroll() {
         window.requestAnimationFrame(() => {
-          const bottomScroll = document.body.scrollHeight - window.innerHeight;
+          const bottomScroll =
+            document.querySelector(".screenshot-container").scrollHeight -
+            window.innerHeight;
 
-          if (window.pageYOffset === 0) {
-            window.scrollTo(0, 1);
-          } else if (document.body.scrollHeight >= window.pageYOffset) {
-            window.scrollTo(0, bottomScroll - 1);
+          if (document.querySelector(".screenshot-container").scrollTop === 0) {
+            document.querySelector(".screenshot-container").scrollTop = 1;
+          } else if (
+            document.querySelector(".screenshot-container").scrollHeight >= bottomScroll
+          ) {
+            document.querySelector(".screenshot-container").scrollTop = bottomScroll - 1;
           }
         });
       }
-      fixScroll();
+      // fixScroll();
 
       new preloader([urlArray.slice(0, 4), urlArray.slice(-4)], {
         onComplete: () => {
@@ -196,7 +212,7 @@ export default {
 
           window.setTimeout(() => {
             this.tweenScrollToBottom();
-          }, 128);
+          }, 256);
         },
       });
     },
@@ -228,7 +244,6 @@ export default {
 <style lang="scss">
 html {
   box-sizing: border-box;
-  scroll-behavior: smooth;
 }
 *,
 *:before,
@@ -242,7 +257,8 @@ html {
   position: relative;
 }
 
-body, html {
+body,
+html {
   background-color: #95a5a6;
 }
 
@@ -268,6 +284,17 @@ body {
   margin-left: $width * -0.5;
   margin-top: $width * -0.5 * 900 / 1440;
   transform-origin: 50% 0%;
+}
+
+.screenshot-container {
+  height: 100vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+.screenshot-container-content {
+  pointer-events: none;
 }
 
 .loading {
