@@ -239,11 +239,11 @@ export default {
               behavior: "auto",
             });
           } else if (
-            document.querySelector(".screenshot-container").scrollTop >= bottomScroll
+            document.querySelector(".screenshot-container").scrollTop >= bottomScroll - 1
           ) {
             document.querySelector(".screenshot-container").scrollTo({
               left: 0,
-              top: bottomScroll - 1,
+              top: bottomScroll - 2,
               behavior: "auto",
             });
           }
@@ -310,6 +310,7 @@ html {
 body,
 html {
   background-color: #95a5a6;
+  overflow: hidden;
 }
 
 body {
