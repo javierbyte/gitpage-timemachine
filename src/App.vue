@@ -1,41 +1,42 @@
 <template>
   <div>
+    <div class="commit-info" v-if="currentCommit">
+      {{ currentCommit.message }}
+      <span class="commit-info-author">
+        --{{ currentCommit.author }}
+        {{ currentCommit.dateStr }}
+        <a
+          :href="
+            `https://github.com/javierbyte/javierbyte.github.io/commit/${currentCommit.sha}`
+          "
+          >#{{ currentCommit.sha.slice(0, 7) }}</a
+        >
+      </span>
+    </div>
+
+    <div v-if="loading" class="loading">
+      Loading...
+    </div>
+
+    <img
+      v-if="!loading"
+      v-for="(commit, commitIndex) in commits"
+      :key="commit.sha"
+      class="screenshot"
+      :src="'pageData/' + commit.sha + '.jpg'"
+      :style="getThumbStyle(commitIndex)"
+      alt=""
+    />
+
     <div class="screenshot-container">
       <div
-        v-if="!loading"
         class="screenshot-container-content"
         :style="{
-          height: 100 + commits.length * 10 + 'vmax',
+          height: 100 + commits.length * 10 + 'vh',
         }"
-      >
-        <img
-          v-for="(commit, commitIndex) in commits"
-          :key="commit.sha"
-          class="screenshot"
-          :src="'pageData/' + commit.sha + '.jpg'"
-          :style="getThumbStyle(commitIndex)"
-          alt=""
-        />
-
-        <div class="commit-info" v-if="currentCommit">
-          {{ currentCommit.message }}
-          <span class="commit-info-author">
-            --{{ currentCommit.author }}
-            {{ currentCommit.dateStr }}
-            <a
-              :href="
-                `https://github.com/javierbyte/javierbyte.github.io/commit/${currentCommit.sha}`
-              "
-              >#{{ currentCommit.sha.slice(0, 7) }}</a
-            >
-          </span>
-        </div>
-      </div>
-
-      <div v-if="loading" class="loading">
-        Loading...
-      </div>
+      ></div>
     </div>
+
     <div class="repo-info">
       <strong>Visualize your Git Page history</strong>. See the
       <a href="https://github.com/javierbyte/gitpage-timemachine/">repo</a> to learn how
@@ -64,6 +65,7 @@ export default {
       debouncedHandleScroll: null,
 
       currentCommit: null,
+      currentIdx: 0,
       scrolledPercent: 0,
 
       debouncedSnap: null,
@@ -77,19 +79,16 @@ export default {
         return;
       }
 
-      const idx = Math.round(this.scrolledPercent / (1 / this.commits.length));
-
-      if (idx === this._lastSnapIdx) {
+      if (this.currentIdx === this._lastSnapIdx) {
         return;
       }
 
-      this._lastSnapIdx = idx;
+      this._lastSnapIdx = this.currentIdx;
 
       document.querySelector(".screenshot-container").scrollTo({
         left: 0,
-        top: Math.ceil(
-          (1 / this.commits.length) *
-            idx *
+        top: Math.round(
+          (this.currentIdx / (this.commits.length - 1)) *
             (document.querySelector(".screenshot-container").scrollHeight -
               document.querySelector(".screenshot-container").clientHeight)
         ),
@@ -98,11 +97,11 @@ export default {
     },
     getThumbStyle(commitIndex) {
       const scrolledPercent = this.scrolledPercent;
-      const position = commitIndex / this.commits.length;
+      const position = commitIndex / (this.commits.length - 1);
 
-      const stepThreshold = 1 / this.commits.length;
+      const stepThreshold = 1 / (this.commits.length - 1);
 
-      const lowerBoundMin = scrolledPercent - stepThreshold - stepThreshold * 5;
+      const lowerBoundMin = scrolledPercent - stepThreshold * 6;
       const lowerBoundMax = scrolledPercent - stepThreshold;
 
       const upperBoundMin = scrolledPercent + stepThreshold;
@@ -110,6 +109,7 @@ export default {
       // out of bounds
       if (position < lowerBoundMin || position > upperBoundMin) {
         return {
+          display: "none",
           opacity: 0,
           transform: "translatey(0) scale(1)",
         };
@@ -120,6 +120,7 @@ export default {
         return {
           opacity: 1,
           transform: "translatey(0) scale(1)",
+          boxShadow: "rgba(0,0,0,0.05) 0 0 0 2px",
         };
       }
 
@@ -145,9 +146,8 @@ export default {
 
         return {
           opacity: 1 - closeness,
-          transform: `translatey(${-200 * Math.pow(closeness, 0.75) + closeness * 64}px) scale(${(4 -
-            Math.pow(closeness, 0.75)) /
-            4})`,
+          transform: `translatey(${-150 * Math.pow(closeness, 0.9)}px) scale(${1 -
+            Math.pow(closeness, 1.5) / 3})`,
         };
       }
     },
@@ -157,26 +157,26 @@ export default {
 
         function getScrollPercent() {
           return (
-            (100 * document.querySelector(".screenshot-container").scrollTop) /
+            document.querySelector(".screenshot-container").scrollTop /
             (document.querySelector(".screenshot-container").scrollHeight -
               document.querySelector(".screenshot-container").clientHeight)
           );
         }
 
-        const idx = Math.round(this.scrolledPercent / (1 / this.commits.length));
-        const result = getScrollPercent() / 100;
+        const scrollPercent = getScrollPercent();
+        const idx = Math.round(scrollPercent * (this.commits.length - 1));
 
-        const currentIdx = Math.min(
-          Math.max(Math.floor(idx), 0),
-          this.commits.length - 1
-        );
+        const currentIdx = Math.min(Math.max(idx, 0), this.commits.length);
 
+        console.log({ currentIdx, total: this.commits.length });
+
+        this.currentIdx = currentIdx;
         this.currentCommit = this.commits[currentIdx];
-        this.scrolledPercent = result;
+        this.scrolledPercent = scrollPercent;
       });
 
       if (this.debouncedSnap) {
-        // this.debouncedSnap();
+        this.debouncedSnap();
       }
     },
     tweenScrollToBottom() {
@@ -203,9 +203,15 @@ export default {
     },
     loadedCommits() {
       window.onresize = function() {
-        document.body.height = window.innerHeight;
-        document.querySelector(".screenshot-container").style.height = window.innerHeight;
+        document.body.height = `${window.innerHeight}px`;
+        document.querySelector(
+          ".screenshot-container"
+        ).style.height = `${window.innerHeight}px`;
       };
+      document.body.height = `${window.innerHeight}px`;
+      document.querySelector(
+        ".screenshot-container"
+      ).style.height = `${window.innerHeight}px`;
 
       document
         .querySelector(".screenshot-container")
@@ -274,7 +280,7 @@ export default {
       });
   },
   mounted() {
-    this.debouncedSnap = _.debounce(this.snap, 256);
+    this.debouncedSnap = _.debounce(this.snap, 384);
   },
   destroyed() {
     window.removeEventListener("scroll", this.handleScroll);
@@ -302,16 +308,11 @@ body,
 html {
   background-color: #95a5a6;
   background: linear-gradient(#95a5a6, #7f8c8d);
-  overflow: hidden;
 }
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  font-weight: 300;
-
-  height: 100vh;
   width: 100vw;
-
   color: #fff;
   text-shadow: rgba(0, 0, 0, 0.25) 0 -1px 0;
 }
@@ -331,14 +332,16 @@ body {
 }
 
 .screenshot-container {
-  height: 100vh;
+  width: 100vw;
   overflow-y: scroll;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
+  transform: translatex(0);
 }
 
 .screenshot-container-content {
-  pointer-events: none;
+  width: 100vw;
+  transform: translatex(0);
 }
 
 .loading {
