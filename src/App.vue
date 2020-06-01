@@ -331,6 +331,7 @@ body {
   height: 100vh;
   overflow-y: scroll;
   overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
 }
 
 .screenshot-container-content {
