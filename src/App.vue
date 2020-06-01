@@ -24,7 +24,7 @@
       :key="commit.sha"
       class="screenshot"
       :src="'pageData/' + commit.sha + '.jpg'"
-      :style="getThumbStyle(commitIndex)"
+      :style="getThumbStyle(commitIndex, speed)"
       alt=""
     />
 
@@ -38,9 +38,11 @@
     </div>
 
     <div class="repo-info">
-      <strong>Visualize your Git Page history</strong>. See the
-      <a href="https://github.com/javierbyte/gitpage-timemachine/">repo</a> to learn how
-      to create your own.
+      <strong>Visualize your Git Page history</strong>. See the github repo
+      <a href="https://github.com/javierbyte/gitpage-timemachine/"
+        >javierbyte/gitpage-timemachine</a
+      >
+      to learn how to create your own.
     </div>
   </div>
 </template>
@@ -62,39 +64,18 @@ export default {
       site: null,
       commits: [],
 
-      debouncedHandleScroll: null,
+      _debouncedSnap: () => {},
 
       currentCommit: null,
       currentIdx: 0,
+      speed: 0,
+      lastScrollPosition: 0,
       scrolledPercent: 0,
 
-      debouncedSnap: null,
-
-      _lastSnapIdx: null,
+      snapped: false,
     };
   },
   methods: {
-    snap() {
-      if (this.tweening) {
-        return;
-      }
-
-      if (this.currentIdx === this._lastSnapIdx) {
-        return;
-      }
-
-      this._lastSnapIdx = this.currentIdx;
-
-      document.querySelector(".screenshot-container").scrollTo({
-        left: 0,
-        top: Math.round(
-          (this.currentIdx / (this.commits.length - 1)) *
-            (document.querySelector(".screenshot-container").scrollHeight -
-              document.querySelector(".screenshot-container").clientHeight)
-        ),
-        behavior: "smooth",
-      });
-    },
     getThumbStyle(commitIndex) {
       const scrolledPercent = this.scrolledPercent;
       const position = commitIndex / (this.commits.length - 1);
@@ -129,12 +110,9 @@ export default {
         const closeness =
           1 - (position - upperBoundMin) / (scrolledPercent - upperBoundMin);
 
-        function easeInOutQuad(t) {
-          return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
-        }
-
         return {
-          opacity: easeInOutQuad(1 - closeness),
+          transition: this.snapped ? "opacity 0.4s" : "none",
+          opacity: this.snapped ? (1 - closeness > 0.5 ? 1 : 0) : 1 - closeness,
           transform: "translatey(0) scale(1)",
         };
       }
@@ -145,19 +123,41 @@ export default {
           1 - (position - lowerBoundMin) / (lowerBoundMax - lowerBoundMin);
 
         return {
-          opacity: 1 - closeness,
-          transform: `translatey(${-150 * Math.pow(closeness, 0.9)}px) scale(${1 -
-            Math.pow(closeness, 1.5) / 3})`,
+          opacity: Math.pow(1 - closeness, 1.5),
+          transform: `translatey(${(2 + this.speed) *
+            -80 *
+            Math.pow(closeness, 0.9)}px) scale(${1 - Math.pow(closeness, 1.5) / 3})`,
         };
       }
     },
     handleScroll() {
+      const scrollPosition =
+        document.querySelector(".screenshot-container").scrollTop || 0;
+
+      if (!this.lastScrollPosition) {
+        this.lastScrollPosition = 0;
+      }
+
+      if (!this.speed) {
+        this.speed = 0;
+      }
+      const distance = Math.abs(this.lastScrollPosition - scrollPosition);
+
+      this.speed =
+        (Math.pow(1 + (this.speed + distance) / 2, 0.25) + this.speed * 12 - 1) / 13;
+
+      if (this.speed < 0.01) this.speed = 0;
+
+      this.lastScrollPosition = scrollPosition;
+      this.snapped = false;
+      this._debouncedSnap();
+
       window.requestAnimationFrame(() => {
         if (!this.commits.length) return;
 
         function getScrollPercent() {
           return (
-            document.querySelector(".screenshot-container").scrollTop /
+            scrollPosition /
             (document.querySelector(".screenshot-container").scrollHeight -
               document.querySelector(".screenshot-container").clientHeight)
           );
@@ -168,16 +168,16 @@ export default {
 
         const currentIdx = Math.min(Math.max(idx, 0), this.commits.length);
 
-        console.log({ currentIdx, total: this.commits.length });
-
         this.currentIdx = currentIdx;
         this.currentCommit = this.commits[currentIdx];
         this.scrolledPercent = scrollPercent;
       });
-
-      if (this.debouncedSnap) {
-        this.debouncedSnap();
-      }
+    },
+    animateScroll() {
+      window.requestAnimationFrame(() => {
+        this.handleScroll();
+        this.animateScroll();
+      });
     },
     tweenScrollToBottom() {
       if (document.querySelector(".screenshot-container").scrollTop < 32) {
@@ -202,6 +202,8 @@ export default {
       }
     },
     loadedCommits() {
+      const vueEl = this;
+
       window.onresize = function() {
         document.body.height = `${window.innerHeight}px`;
         document.querySelector(
@@ -213,9 +215,11 @@ export default {
         ".screenshot-container"
       ).style.height = `${window.innerHeight}px`;
 
-      document
-        .querySelector(".screenshot-container")
-        .addEventListener("scroll", this.handleScroll);
+      // document
+      //   .querySelector(".screenshot-container")
+      //   .addEventListener("scroll", this.handleScroll);
+
+      this.animateScroll();
 
       const urlArray = _.map(this.commits, (commit) => {
         return "pageData/" + commit.sha + ".jpg";
@@ -244,6 +248,7 @@ export default {
               behavior: "auto",
             });
           }
+
           fixScroll();
         });
       }
@@ -264,7 +269,18 @@ export default {
       });
     },
   },
+
   created() {
+    this._debouncedSnap = _.debounce(
+      () => {
+        this.snapped = true;
+      },
+      256,
+      {
+        leading: false,
+      }
+    );
+
     axios
       .get("pageData/site.json")
       .then((res) => {
@@ -278,9 +294,6 @@ export default {
       .catch((err) => {
         console.error(err);
       });
-  },
-  mounted() {
-    this.debouncedSnap = _.debounce(this.snap, 384);
   },
   destroyed() {
     window.removeEventListener("scroll", this.handleScroll);
