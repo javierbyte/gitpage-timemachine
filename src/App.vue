@@ -8,22 +8,24 @@
           height: 100 + commits.length * 10 + 'vmax',
         }"
       >
-        <div v-for="(commit, commitIndex) in commits">
-          <img
-            class="screenshot"
-            :src="'pageData/' + commit.sha + '.jpg'"
-            :style="getThumbStyle(commitIndex)"
-            alt=""
-          />
-        </div>
+        <img
+          v-for="(commit, commitIndex) in commits"
+          :key="commit.sha"
+          class="screenshot"
+          :src="'pageData/' + commit.sha + '.jpg'"
+          :style="getThumbStyle(commitIndex)"
+          alt=""
+        />
 
         <div class="commit-info" v-if="currentCommit">
           {{ currentCommit.message }}
           <span class="commit-info-author">
             --{{ currentCommit.author }}
-            {{ new Date(currentCommit.date).toLocaleDateString() }}
+            {{ currentCommit.dateStr }}
             <a
-              :href="`https://github.com/javierbyte/javierbyte.github.io/commit/${currentCommit.sha}`"
+              :href="
+                `https://github.com/javierbyte/javierbyte.github.io/commit/${currentCommit.sha}`
+              "
               >#{{ currentCommit.sha.slice(0, 7) }}</a
             >
           </span>
@@ -35,7 +37,7 @@
       </div>
     </div>
     <div class="repo-info">
-      Visualize your Github Page history. See the
+      Visualize your Git Page history. See the
       <a href="https://github.com/javierbyte/gitpage-timemachine/">repo</a> to learn how
       to create your own.
     </div>
@@ -46,8 +48,8 @@
 import axios from "axios";
 import _ from "lodash";
 
-const tween = require("./lib/tween.js");
-const preloader = require("pre-loader");
+import Tween from "./lib/tween.js";
+import Preloader from "pre-loader";
 
 export default {
   name: "app",
@@ -176,22 +178,8 @@ export default {
       }
     },
     tweenScrollToBottom() {
-      // if (document.querySelector(".screenshot-container").scrollTop < 32) {
-      //   const bottomScroll =
-      //     document.querySelector(".screenshot-container").scrollHeight -
-      //     document.querySelector(".screenshot-container").getBoundingClientRect().height;
-
-      //   // document.querySelector(".screenshot-container").scrollTop = bottomScroll - 1;
-      //   // document.querySelector(".screenshot-container").scrollTo(0, bottomScroll - 1);
-      //   document.querySelector(".screenshot-container").scrollTo({
-      //     left: 0,
-      //     top: bottomScroll - 1,
-      //     behavior: "auto"
-      //   });
-      // }
-
       if (document.querySelector(".screenshot-container").scrollTop < 32) {
-        tween(
+        Tween(
           {
             start: 0,
             end:
@@ -212,7 +200,7 @@ export default {
       }
     },
     loadedCommits() {
-      window.onresize = function () {
+      window.onresize = function() {
         document.body.height = window.innerHeight;
         document.querySelector(".screenshot-container").style.height = window.innerHeight;
       };
@@ -239,7 +227,8 @@ export default {
               behavior: "auto",
             });
           } else if (
-            document.querySelector(".screenshot-container").scrollTop >= bottomScroll - 1
+            document.querySelector(".screenshot-container").scrollTop >=
+            bottomScroll - 1
           ) {
             document.querySelector(".screenshot-container").scrollTo({
               left: 0,
@@ -251,18 +240,18 @@ export default {
         });
       }
 
-      new preloader([...urlArray.slice(0, 4), ...urlArray.slice(-4)], {
+      new Preloader([...urlArray.slice(0, 4), ...urlArray.slice(-4)], {
         onComplete: () => {
           this.loading = false;
           this.tweening = true;
 
-          window.setTimeout(() => {
+          window.requestAnimationFrame(() => {
             this.tweenScrollToBottom();
             window.setTimeout(() => {
               fixScroll();
               this.tweening = false;
             }, 3200);
-          }, 200);
+          });
         },
       });
     },
@@ -272,10 +261,10 @@ export default {
       .get("pageData/site.json")
       .then((res) => {
         this.site = _.omit(res.data, "commits");
-        this.commits = _.sortBy(res.data.commits, "date");
-
+        this.commits = _.sortBy(res.data.commits, "date").map((commit) => {
+          return { ...commit, dateStr: new Date(commit.date).toLocaleDateString() };
+        });
         this.currentCommit = this.commits[0];
-
         this.loadedCommits();
       })
       .catch((err) => {
@@ -310,6 +299,7 @@ html {
 body,
 html {
   background-color: #95a5a6;
+  background: linear-gradient(#95a5a6, #7f8c8d);
   overflow: hidden;
 }
 

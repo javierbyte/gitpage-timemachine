@@ -24,4 +24,4 @@ function Tween(config, cb) {
 	window.requestAnimationFrame(tweenCb);
 }
 
-module.exports = Tween;
+export default Tween;
