@@ -102,7 +102,7 @@ export default {
 
       const stepThreshold = 1 / this.commits.length;
 
-      const lowerBoundMin = scrolledPercent - stepThreshold - stepThreshold * 4;
+      const lowerBoundMin = scrolledPercent - stepThreshold - stepThreshold * 5;
       const lowerBoundMax = scrolledPercent - stepThreshold;
 
       const upperBoundMin = scrolledPercent + stepThreshold;
@@ -145,7 +145,9 @@ export default {
 
         return {
           opacity: 1 - closeness,
-          transform: `translatey(${-5.2 * closeness}rem) scale(${(4 - closeness) / 4})`,
+          transform: `translatey(${-200 * Math.pow(closeness, 0.75) + closeness * 64}px) scale(${(4 -
+            Math.pow(closeness, 0.75)) /
+            4})`,
         };
       }
     },
@@ -325,6 +327,7 @@ body {
   margin-left: $width * -0.5;
   margin-top: $width * -0.5 * 900 / 1440;
   transform-origin: 50% 0%;
+  border-radius: 3px;
 }
 
 .screenshot-container {
