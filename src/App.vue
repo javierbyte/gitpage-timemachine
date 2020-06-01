@@ -37,7 +37,7 @@
       </div>
     </div>
     <div class="repo-info">
-      Visualize your Git Page history. See the
+      <strong>Visualize your Git Page history</strong>. See the
       <a href="https://github.com/javierbyte/gitpage-timemachine/">repo</a> to learn how
       to create your own.
     </div>
@@ -176,7 +176,7 @@ export default {
       });
 
       if (this.debouncedSnap) {
-        this.debouncedSnap();
+        // this.debouncedSnap();
       }
     },
     tweenScrollToBottom() {
