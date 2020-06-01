@@ -149,7 +149,6 @@ export default {
       if (this.speed < 0.01) this.speed = 0;
 
       this.lastScrollPosition = scrollPosition;
-      this.snapped = false;
 
       window.requestAnimationFrame(() => {
         if (!this.commits.length) return;
@@ -218,9 +217,10 @@ export default {
       //   .querySelector(".screenshot-container")
       //   .addEventListener("scroll", this.handleScroll);
 
-      document
-        .querySelector(".screenshot-container")
-        .addEventListener("scroll", this._debouncedSnap);
+      document.querySelector(".screenshot-container").addEventListener("scroll", () => {
+        this.snapped = false;
+        this._debouncedSnap();
+      });
 
       this.animateScroll();
 
