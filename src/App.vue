@@ -78,9 +78,9 @@ export default {
   methods: {
     getThumbStyle(commitIndex) {
       const scrolledPercent = this.scrolledPercent;
-      const position = commitIndex / (this.commits.length - 1);
+      const position = commitIndex / this.commits.length;
 
-      const stepThreshold = 1 / (this.commits.length - 1);
+      const stepThreshold = 1 / this.commits.length;
 
       const lowerBoundMin = scrolledPercent - stepThreshold * 6;
       const lowerBoundMax = scrolledPercent - stepThreshold;
@@ -162,12 +162,12 @@ export default {
         }
 
         const scrollPercent = getScrollPercent();
-        const idx = Math.round(scrollPercent * (this.commits.length - 1));
+        const idx = Math.round(scrollPercent * this.commits.length);
 
         const currentIdx = Math.min(Math.max(idx, 0), this.commits.length);
 
         this.currentIdx = currentIdx;
-        this.currentCommit = this.commits[currentIdx];
+        this.currentCommit = this.commits[Math.min(currentIdx, this.commits.length - 1)];
         this.scrolledPercent = scrollPercent;
       });
     },
