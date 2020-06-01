@@ -123,7 +123,7 @@ export default {
           1 - (position - lowerBoundMin) / (lowerBoundMax - lowerBoundMin);
 
         return {
-          opacity: Math.pow(1 - closeness, 1.5),
+          opacity: Math.pow(1 - closeness, 2) + 0.05 + this.speed / 10,
           transform: `translatey(${(2 + this.speed) *
             -80 *
             Math.pow(closeness, 0.9)}px) scale(${1 - Math.pow(closeness, 1.5) / 3})`,
@@ -334,10 +334,10 @@ body {
 }
 
 .screenshot {
-  $width: 95vmin;
+  $width: 92vmin;
 
   position: fixed;
-  top: 52%;
+  top: 54%;
   left: 50%;
   width: $width;
   height: $width * 900 / 1440;
