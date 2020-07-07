@@ -15,7 +15,7 @@
     "axios": "^0.19.2",
     "lodash": "^4.17.4",
     "node-git-history": "^1.0.2",
-    "npm": "^6.14.5",
+    "npm": "^6.14.6",
     "pre-loader": "^0.5.0",
     "puppeteer": "^3.2.0",
     "rimraf": "^3.0.2",
